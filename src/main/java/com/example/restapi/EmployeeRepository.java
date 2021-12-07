@@ -1,5 +1,6 @@
 package com.example.restapi;
 
+import com.example.restapi.Exception.NoEmployeeFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,5 +16,10 @@ public class EmployeeRepository {
 
     public List<Employee> findAll() {
         return this.employees;
+    }
+
+
+    public Employee findById(Integer id) {
+        return employees.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElseThrow(NoEmployeeFoundException::new);
     }
 }
