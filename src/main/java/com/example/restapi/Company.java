@@ -1,6 +1,5 @@
 package com.example.restapi;
 
-import com.example.restapi.Employee;
 
 import java.util.List;
 
