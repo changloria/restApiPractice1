@@ -44,6 +44,6 @@ public class EmployeeService {
     }
 
     public void delete(int id) {
-
+        employeeRepository.delete(id);
     }
 }
