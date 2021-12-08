@@ -42,18 +42,10 @@ public class EmployeeController {
 //        return employeeRepository.create(newEmployee);
 //    }
 //
-//    @PutMapping("/{id}")
-//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-//        Employee employee = employeeRepository.findById(id);
-//        if (employee.getAge() != null) {
-//            employee.setAge(updatedEmployee.getAge());
-//        }
-//
-//        if (employee.getSalary() != null) {
-//            employee.setSalary(updatedEmployee.getSalary());
-//        }
-//        return employeeRepository.save(id, employee );
-//    }
+    @PutMapping("/{id}")
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
+        return employeeService.edit(id, updatedEmployee);
+    }
 //
 //    @ResponseStatus(code = HttpStatus.NO_CONTENT)
 //    @DeleteMapping("/{id}")
