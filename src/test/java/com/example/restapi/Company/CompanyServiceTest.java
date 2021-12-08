@@ -83,6 +83,25 @@ public class CompanyServiceTest {
         List<Employee> actual = companyService.findEmployeeById(1);
         //then
         assertEquals(employees, actual);
-
     }
+
+    @Test
+    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
+        //given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1, "OOCL"));
+        companies.add(new Company(2, "OOCL2"));
+
+        Integer page = 1;
+        Integer pageSize = 2;
+
+        given(mockCompanyRepository.findByPage(page, pageSize))
+                .willReturn(companies);
+
+        //when`
+        List<Company> actual = companyService.findByPage(page, pageSize);
+        //then
+        assertEquals(companies, actual);
+    }
+
 }
