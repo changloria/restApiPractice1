@@ -9,55 +9,55 @@ import java.util.List;
 @RequestMapping("employees")
 public class EmployeeController {
 
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return employeeService.findAll();
     }
 
 
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-        return employeeRepository.findById(id);
-    }
-
-    @GetMapping(params = {"gender"})
-    public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
-        return employeeRepository.findByGender(gender);
-    }
-
-    @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
-        return employeeRepository.findByPage(page, pageSize);
-    }
-
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @PostMapping
-    public Employee createEmployee(@RequestBody Employee newEmployee) {
-        return employeeRepository.create(newEmployee);
-    }
-
-    @PutMapping("/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-        Employee employee = employeeRepository.findById(id);
-        if (employee.getAge() != null) {
-            employee.setAge(updatedEmployee.getAge());
-        }
-
-        if (employee.getSalary() != null) {
-            employee.setSalary(updatedEmployee.getSalary());
-        }
-        return employeeRepository.save(id, employee );
-    }
-
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Integer id) {
-        employeeRepository.delete(id);
-    }
+//    @GetMapping("/{id}")
+//    public Employee getEmployeeById(@PathVariable Integer id) {
+//        return employeeRepository.findById(id);
+//    }
+//
+//    @GetMapping(params = {"gender"})
+//    public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
+//        return employeeRepository.findByGender(gender);
+//    }
+//
+//    @GetMapping(params = {"page", "pageSize"})
+//    public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
+//        return employeeRepository.findByPage(page, pageSize);
+//    }
+//
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    @PostMapping
+//    public Employee createEmployee(@RequestBody Employee newEmployee) {
+//        return employeeRepository.create(newEmployee);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
+//        Employee employee = employeeRepository.findById(id);
+//        if (employee.getAge() != null) {
+//            employee.setAge(updatedEmployee.getAge());
+//        }
+//
+//        if (employee.getSalary() != null) {
+//            employee.setSalary(updatedEmployee.getSalary());
+//        }
+//        return employeeRepository.save(id, employee );
+//    }
+//
+//    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+//    @DeleteMapping("/{id}")
+//    public void deleteEmployee(@PathVariable Integer id) {
+//        employeeRepository.delete(id);
+//    }
 }
