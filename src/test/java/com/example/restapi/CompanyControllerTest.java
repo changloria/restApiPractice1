@@ -127,6 +127,12 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].employees[0].id").value(employees.get(0).getId()))
                 .andExpect(jsonPath("$[0].employees[0].name").value(employees.get(0).getName()))
                 .andExpect(jsonPath("$[0].employees[0].gender").value(employees.get(0).getGender()))
-                .andExpect(jsonPath("$[0].employees[0].salary").value(employees.get(0).getSalary()));
+                .andExpect(jsonPath("$[0].employees[0].salary").value(employees.get(0).getSalary()))
+                .andExpect(jsonPath("$[1].id").isNumber())
+                .andExpect(jsonPath("$[1].name").value("Spring2"))
+                .andExpect(jsonPath("$[1].employees[0].id").value(employees.get(0).getId()))
+                .andExpect(jsonPath("$[1].employees[0].name").value(employees.get(0).getName()))
+                .andExpect(jsonPath("$[1].employees[0].gender").value(employees.get(0).getGender()))
+                .andExpect(jsonPath("$[1].employees[0].salary").value(employees.get(0).getSalary()));
     }
 }
