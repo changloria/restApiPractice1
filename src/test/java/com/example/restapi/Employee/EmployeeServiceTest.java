@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +61,22 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employees, actualEmployees);
     }
+
+    @Test
+    void should_return_employees_when_getByPage_given_employees() {
+        //given
+        List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee(1, "Marcus", 19, "Male", 1920213), new Employee(2, "Gloria", 19, "Female", 10000), new Employee(3, "Marcus2", 19, "Male", 1920213)));
+
+        Integer page = 1;
+        Integer pageSize = 2;
+        given(mockEmployeeRepository.findByPage(page, pageSize))
+                .willReturn(employees);
+        //when
+        List<Employee> actualEmployees = employeeService.findByPage(page, pageSize);
+        //then
+        assertEquals(employees, actualEmployees);
+    }
+
 
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
