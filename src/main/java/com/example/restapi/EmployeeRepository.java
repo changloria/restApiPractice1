@@ -57,4 +57,8 @@ public class EmployeeRepository {
         Employee employee = findById(id);
         employees.remove(employee);
     }
+
+    public void cleaarAll() {
+        employees.clear();
+    }
 }
