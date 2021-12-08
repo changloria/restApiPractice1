@@ -22,7 +22,6 @@ public class EmployeeServiceTest {
     EmployeeRepository employeeRepository;
 
     @InjectMocks
-    @Spy
     EmployeeService employeeService;
 
     @Test
