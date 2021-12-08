@@ -35,13 +35,13 @@ public class EmployeeController {
     public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
         return employeeService.findByPage(page, pageSize);
     }
-//
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    @PostMapping
-//    public Employee createEmployee(@RequestBody Employee newEmployee) {
-//        return employeeRepository.create(newEmployee);
-//    }
-//
+
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee newEmployee) {
+        return employeeService.create(newEmployee);
+    }
+
     @PutMapping("/{id}")
     public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         return employeeService.edit(id, updatedEmployee);

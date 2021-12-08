@@ -98,4 +98,20 @@ public class EmployeeServiceTest {
         assertEquals(employee, actual);
     }
 
+    @Test
+    void should_return_created_employee_when_add_employee_given_new_employee() {
+        //given
+        Employee newEmployee = new Employee(1, "Marcus", 25, "Male", 9999999);
+        given(mockEmployeeRepository.create(newEmployee))
+                .willReturn(newEmployee);
+
+        //when
+        Employee actual = employeeService.create(newEmployee);
+
+        //then
+        verify(mockEmployeeRepository).create(newEmployee);
+        assertEquals(newEmployee, actual);
+    }
+
+
 }
