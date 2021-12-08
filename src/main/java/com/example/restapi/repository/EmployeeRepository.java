@@ -14,7 +14,7 @@ public class EmployeeRepository {
 
 
     public EmployeeRepository() {
-        this.employees.add(new Employee(1, "Gloria1", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(1, "Marcus", 19, "Male", 1920213, 1));
         this.employees.add(new Employee(2, "Gloria2", 22, "Female", 10000, 1));
         this.employees.add(new Employee(3, "Gloria3", 22, "Female", 10000, 1));
         this.employees.add(new Employee(4, "Gloria4", 22, "Female", 10000, 1));
@@ -61,5 +61,9 @@ public class EmployeeRepository {
 
     public void clearAll() {
         employees.clear();
+    }
+
+    public List<Employee> findByCompanyId(Integer companyId) {
+        return employees.stream().filter(employee -> employee.getCompanyId().equals(companyId)).collect(Collectors.toList());
     }
 }

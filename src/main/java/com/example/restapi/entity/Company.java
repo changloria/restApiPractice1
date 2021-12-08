@@ -31,9 +31,8 @@ public class Company {
         this.employees = employee;
     }
 
-    public Company(Integer id, String name, List<Employee>  employees) {
+    public Company(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.employees = employees;
     }
 }
