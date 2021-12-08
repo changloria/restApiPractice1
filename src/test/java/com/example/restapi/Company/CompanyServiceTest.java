@@ -64,9 +64,25 @@ public class CompanyServiceTest {
                 .willReturn(companies.get(0));
 
         //when
-        //then
         Company actual = companyService.findById(1);
         //then
         assertEquals(companies.get(0), actual);
+    }
+
+    @Test
+    void should_get_all_employee_under_company_when_obtain_employee_list_given_employees_and_company() throws Exception {
+        //given
+        List<Employee> employees = getEmployees();
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1, "OOCL"));
+        companies.add(new Company(2, "OOCL2"));
+
+        given(mockCompanyRepository.findEmployeeById(1))
+                .willReturn(employees);
+        //when`
+        List<Employee> actual = companyService.findEmployeeById(1);
+        //then
+        assertEquals(employees, actual);
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.restapi.service;
 
 
 import com.example.restapi.entity.Company;
+import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
 
 import java.util.List;
@@ -19,5 +20,9 @@ public class CompanyService {
 
     public Company findById(int companyId) {
         return companyRepository.findById(companyId);
+    }
+
+    public List<Employee> findEmployeeById(int id) {
+        return null;
     }
 }
