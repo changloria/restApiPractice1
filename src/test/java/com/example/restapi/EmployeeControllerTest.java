@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,7 +91,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_return_employee_list_when_perform_getByPage_given_employees() throws Exception {
+    void should_get_employee_list_when_perform_getByPage_given_employees() throws Exception {
         //given
         Employee employee1 = new Employee(1, "Marcus", 19, "Male", 1920213);
         Employee employee2 = new Employee(2, "Gloria", 22, "Female", 1000000);
@@ -143,6 +144,34 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    void should_return_changed_employee_when_perform_put_given_employee_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(1, "Marcus", 19, "Male", 1920213);
+        Employee employee2 = new Employee(2, "Gloria", 22, "Female", 1000000);
+        Employee employee3 = new Employee(3, "Linne", 22, "Female", 1000000);
+
+        employeeRepository.create(employee1);
+        employeeRepository.create(employee2);
+        employeeRepository.create(employee3);
+
+        String employee = "{\n" +
+                "        \"age\": 25,\n" +
+                "        \"salary\": 298919999\n" +
+                "    }";
+
+        //when
+        //then
+        mockMvc.perform(put("/employees/{id}", employee1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employee))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Marcus"))
+                .andExpect(jsonPath("$.age").value("25"))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value("298919999"));
+    }
+
+    @Test
     void should_delete_employee_when_perform_delete_given_employee_and_id() throws Exception {
         //given
         Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
@@ -155,4 +184,6 @@ public class EmployeeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee.getId()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
+
+
 }
