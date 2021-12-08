@@ -57,4 +57,8 @@ public class CompanyRepository {
         Company company = findById(id);
         companies.remove(company);
     }
+
+    public void clearAll() {
+        companies.clear();
+    }
 }
