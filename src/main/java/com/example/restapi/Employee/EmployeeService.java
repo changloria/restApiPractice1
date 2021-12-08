@@ -28,6 +28,6 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer id) {
-        return null;
+        return  employeeRepository.findById(id);
     }
 }
