@@ -42,4 +42,8 @@ public class EmployeeService {
     public Employee create(Employee newEmployee) {
         return employeeRepository.create(newEmployee);
     }
+
+    public void delete(int id) {
+
+    }
 }

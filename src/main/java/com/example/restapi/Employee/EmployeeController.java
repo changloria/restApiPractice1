@@ -46,10 +46,10 @@ public class EmployeeController {
     public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         return employeeService.edit(id, updatedEmployee);
     }
-//
-//    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-//    @DeleteMapping("/{id}")
-//    public void deleteEmployee(@PathVariable Integer id) {
-//        employeeRepository.delete(id);
-//    }
+
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable Integer id) {
+        employeeService.delete(id);
+    }
 }
