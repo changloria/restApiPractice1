@@ -141,4 +141,18 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.salary").value("298912220"));
 
     }
+
+    @Test
+    void should_delete_employee_when_perform_delete_given_employee_and_id() throws Exception {
+        //given
+        Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
+        Employee employee2 = new Employee(2, "Gloria", 22, "Female", 1000000);
+
+        employeeRepository.create(employee);
+        employeeRepository.create(employee2);
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee.getId()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
