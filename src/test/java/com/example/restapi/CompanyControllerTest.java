@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -14,7 +15,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -134,5 +137,45 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[1].employees[0].name").value(employees.get(0).getName()))
                 .andExpect(jsonPath("$[1].employees[0].gender").value(employees.get(0).getGender()))
                 .andExpect(jsonPath("$[1].employees[0].salary").value(employees.get(0).getSalary()));
+    }
+
+    @Test
+    void should_return_company_when_perform_post_given_company() throws Exception {
+        //given
+        String company = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"name\": \"OOCL\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"age\": 23,\n" +
+                "            \"name\": \"Mary\",\n" +
+                "            \"gender\": \"Female\",\n" +
+                "            \"salary\": 10000\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 2,\n" +
+                "            \"age\": 22,\n" +
+                "            \"name\": \"Gloria\",\n" +
+                "            \"gender\": \"Female\",\n" +
+                "            \"salary\": 34000\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(company))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.name").value("OOCL"))
+                .andExpect(jsonPath("$.employees[0].id").value("1"))
+                .andExpect(jsonPath("$.employees[0].age").value("23"))
+                .andExpect(jsonPath("$.employees[0].name").value("Mary"))
+                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
+                .andExpect(jsonPath("$.employees[0].salary").value("10000"));
+
     }
 }
