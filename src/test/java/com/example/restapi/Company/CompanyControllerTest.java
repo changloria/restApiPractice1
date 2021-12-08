@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -176,6 +177,30 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.employees[0].name").value("Mary"))
                 .andExpect(jsonPath("$.employees[0].gender").value("Female"))
                 .andExpect(jsonPath("$.employees[0].salary").value("10000"));
+    }
 
+    @Test
+    void should_return_changed_company_when_perform_put_given_company_id() throws Exception {
+        //given
+        List<Employee> employees = getEmployees();
+        Company company1 = new Company(1, "Spring", employees);
+        Company company2 = new Company(2, "Spring2", employees);
+        Company company3 = new Company(3, "Spring3", employees);
+
+        companyRepository.create(company1);
+        companyRepository.create(company2);
+        companyRepository.create(company3);
+
+        String company = "{\n" +
+                "    \"name\": \"OOCL\"\n" +
+                "}";
+
+        //when
+        //then
+        mockMvc.perform(put("/companies/{id}", company1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(company))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("OOCL"));
     }
 }
