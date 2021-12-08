@@ -29,4 +29,8 @@ public class CompanyService {
     public List<Company> findByPage(Integer page, Integer pageSize) {
         return companyRepository.findByPage(page, pageSize);
     }
+
+    public Company create(Company company) {
+        return null;
+    }
 }

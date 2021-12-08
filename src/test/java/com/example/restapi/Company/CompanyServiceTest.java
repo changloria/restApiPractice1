@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -19,7 +20,9 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
@@ -102,6 +105,18 @@ public class CompanyServiceTest {
         List<Company> actual = companyService.findByPage(page, pageSize);
         //then
         assertEquals(companies, actual);
+    }
+
+    @Test
+    void should_return_company_when_perform_post_given_company() throws Exception {
+        //given
+        Company newCompany = new Company(3, "OOCL3");
+        given(mockCompanyRepository.create(newCompany))
+                .willReturn(newCompany);
+        //when
+        Company actual = companyService.create(newCompany);
+        //then
+        assertEquals(newCompany, actual);
     }
 
 }
