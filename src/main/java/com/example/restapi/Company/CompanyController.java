@@ -1,5 +1,6 @@
-package com.example.restapi;
+package com.example.restapi.Company;
 
+import com.example.restapi.Employee.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

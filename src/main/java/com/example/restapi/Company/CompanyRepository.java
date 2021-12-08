@@ -1,11 +1,11 @@
-package com.example.restapi;
+package com.example.restapi.Company;
 
+import com.example.restapi.Employee.Employee;
 import com.example.restapi.Exception.NoCompanyFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

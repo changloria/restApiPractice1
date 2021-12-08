@@ -1,4 +1,4 @@
-package com.example.restapi;
+package com.example.restapi.Employee;
 
 import com.example.restapi.Exception.NoEmployeeFoundException;
 import org.springframework.stereotype.Repository;

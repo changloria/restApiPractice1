@@ -1,4 +1,4 @@
-package com.example.restapi;
+package com.example.restapi.Employee;
 
 public class Employee {
 
