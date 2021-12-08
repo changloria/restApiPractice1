@@ -30,11 +30,11 @@ public class EmployeeController {
     public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
         return employeeService.findByGender(gender);
     }
-//
-//    @GetMapping(params = {"page", "pageSize"})
-//    public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
-//        return employeeRepository.findByPage(page, pageSize);
-//    }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
+        return employeeService.findByPage(page, pageSize);
+    }
 //
 //    @ResponseStatus(code = HttpStatus.CREATED)
 //    @PostMapping

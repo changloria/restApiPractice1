@@ -36,6 +36,6 @@ public class EmployeeService {
     }
 
     public List<Employee> findByPage(Integer page, Integer pageSize) {
-        return null;
+        return employeeRepository.findByPage(page, pageSize);
     }
 }
