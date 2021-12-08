@@ -48,7 +48,23 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].gender").value("Male"))
                 .andExpect(jsonPath("$[0].salary").value("1920213"));
     }
-    
+
+    @Test
+    void should_get_employee_by_id_when_perform_getById_given_employee_and_id() throws Exception {
+        //given
+        Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
+        employeeRepository.create(employee);
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Marcus"))
+                .andExpect(jsonPath("$.age").value("19"))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value("1920213"));
+    }
+
     @Test
     void should_return_employee_when_perform_post_given_employee() throws Exception {
         //given
