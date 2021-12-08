@@ -118,4 +118,27 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[1].gender").value("Female"))
                 .andExpect(jsonPath("$[1].salary").value("1000000"));
     }
+
+    @Test
+    void should_return_employee_when_perform_post_given_employee() throws Exception {
+        //given
+        String employee = "{\n" +
+                "        \"name\": \"Marcus\",\n" +
+                "        \"age\": 22,\n" +
+                "        \"gender\": \"Male\",\n" +
+                "        \"salary\": 298912220\n" +
+                "    }";
+
+        //when
+        //then
+        mockMvc.perform(post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employee))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("Marcus"))
+                .andExpect(jsonPath("$.age").value("22"))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value("298912220"));
+
+    }
 }
