@@ -49,6 +49,19 @@ public class EmployeeServiceTest {
     }
 
     @Test
+    void should_return_employees_when_getByGender_given_employees_and_gender() {
+        //given
+        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213)));
+
+        given(mockEmployeeRepository.findByGender(employees.get(0).getGender()))
+                .willReturn(employees);
+        //when
+        List<Employee> actualEmployees = employeeService.findByGender(employees.get(0).getGender());
+        //then
+        assertEquals(employees, actualEmployees);
+    }
+
+    @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
         Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);

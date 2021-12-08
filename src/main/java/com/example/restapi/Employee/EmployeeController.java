@@ -25,11 +25,11 @@ public class EmployeeController {
     public Employee getEmployeeById(@PathVariable Integer id) {
         return employeeService.findById(id);
     }
-//
-//    @GetMapping(params = {"gender"})
-//    public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
-//        return employeeRepository.findByGender(gender);
-//    }
+
+    @GetMapping(params = {"gender"})
+    public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
+        return employeeService.findByGender(gender);
+    }
 //
 //    @GetMapping(params = {"page", "pageSize"})
 //    public List<Employee> getAllEmployeesByPage(@RequestParam Integer page, Integer pageSize) {
