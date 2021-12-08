@@ -1,7 +1,7 @@
-package com.example.restapi.Company;
+package com.example.restapi.entity;
 
 
-import com.example.restapi.Employee.Employee;
+import com.example.restapi.entity.Employee;
 
 import java.util.List;
 

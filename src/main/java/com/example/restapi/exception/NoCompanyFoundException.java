@@ -1,4 +1,4 @@
-package com.example.restapi.Exception;
+package com.example.restapi.exception;
 
 public class NoCompanyFoundException extends RuntimeException{
     public NoCompanyFoundException() {

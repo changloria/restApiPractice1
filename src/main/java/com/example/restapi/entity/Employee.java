@@ -1,4 +1,4 @@
-package com.example.restapi.Employee;
+package com.example.restapi.entity;
 
 public class Employee {
 

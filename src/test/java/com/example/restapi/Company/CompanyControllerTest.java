@@ -1,6 +1,8 @@
 package com.example.restapi.Company;
 
-import com.example.restapi.Employee.Employee;
+import com.example.restapi.entity.Company;
+import com.example.restapi.entity.Employee;
+import com.example.restapi.repository.CompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

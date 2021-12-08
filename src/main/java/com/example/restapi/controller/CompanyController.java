@@ -1,6 +1,8 @@
-package com.example.restapi.Company;
+package com.example.restapi.controller;
 
-import com.example.restapi.Employee.Employee;
+import com.example.restapi.entity.Company;
+import com.example.restapi.entity.Employee;
+import com.example.restapi.repository.CompanyRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
