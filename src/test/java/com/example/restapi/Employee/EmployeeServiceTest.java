@@ -47,10 +47,8 @@ public class EmployeeServiceTest {
         given(mockEmployeeRepository.save(any(), any(Employee.class)))
                 .willReturn(employee);
 
-
         //when
         Employee actual = employeeService.edit(employee.getId(), updatedEmployee);
-
 
         //then
         verify(mockEmployeeRepository).save(employee.getId(), employee);
