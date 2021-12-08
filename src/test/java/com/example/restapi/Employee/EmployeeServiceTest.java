@@ -41,10 +41,10 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
 
-        given(mockEmployeeRepository.findById(employee.getId()))
+        given(mockEmployeeRepository.findById(1))
                 .willReturn(employee);
         //when
-        Employee actualEmployee = employeeService.findById(employee.getId());
+        Employee actualEmployee = employeeService.findById(1);
         //then
         assertEquals(employee, actualEmployee);
     }
@@ -54,10 +54,10 @@ public class EmployeeServiceTest {
         //given
         List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213)));
 
-        given(mockEmployeeRepository.findByGender(employees.get(0).getGender()))
+        given(mockEmployeeRepository.findByGender("Male"))
                 .willReturn(employees);
         //when
-        List<Employee> actualEmployees = employeeService.findByGender(employees.get(0).getGender());
+        List<Employee> actualEmployees = employeeService.findByGender("Male");
         //then
         assertEquals(employees, actualEmployees);
     }
