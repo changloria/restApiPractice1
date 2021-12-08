@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -117,6 +118,21 @@ public class CompanyServiceTest {
         Company actual = companyService.create(newCompany);
         //then
         assertEquals(newCompany, actual);
+    }
+
+    @Test
+    void should_return_update_company_when_perform_put_given_company_id() throws Exception {
+        //given
+        Company updatedCompany = new Company(1, "OOCLL");
+        given(mockCompanyRepository.save(1, updatedCompany))
+                .willReturn(updatedCompany);
+        given(mockCompanyRepository.findById(1))
+                .willReturn(updatedCompany);
+        //when
+        Company actual = companyService.save(1, updatedCompany);
+        //then
+        assertEquals(updatedCompany, actual);
+
     }
 
 }
