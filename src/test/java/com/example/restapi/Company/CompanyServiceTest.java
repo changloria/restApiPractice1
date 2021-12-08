@@ -20,6 +20,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -133,6 +134,18 @@ public class CompanyServiceTest {
         //then
         assertEquals(updatedCompany, actual);
 
+    }
+
+    @Test
+    void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
+        //given
+        Company company = new Company(1, "OOCL");
+
+        //when
+        companyService.delete(company.getId());
+
+        //then
+        verify(mockCompanyRepository).delete(company.getId());
     }
 
 }

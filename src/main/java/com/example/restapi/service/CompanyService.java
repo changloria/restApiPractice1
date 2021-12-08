@@ -37,4 +37,7 @@ public class CompanyService {
     public Company save(int id, Company updatedCompany) {
         return companyRepository.save(id, updatedCompany);
     }
+
+    public void delete(Integer companyId) {
+    }
 }
