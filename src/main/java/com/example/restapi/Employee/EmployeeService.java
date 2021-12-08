@@ -26,4 +26,8 @@ public class EmployeeService {
         }
         return employeeRepository.save(id, employee);
     }
+
+    public Employee findById(Integer id) {
+        return null;
+    }
 }
