@@ -53,4 +53,20 @@ public class CompanyServiceTest {
         assertEquals(companies, actual);
     }
 
+    @Test
+    void should_get_company_when_perform_getById_given_company_and_id() throws Exception {
+        //given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1, "OOCL"));
+        companies.add(new Company(2, "OOCL2"));
+
+        given(mockCompanyRepository.findById(1))
+                .willReturn(companies.get(0));
+
+        //when
+        //then
+        Company actual = companyService.findById(1);
+        //then
+        assertEquals(companies.get(0), actual);
+    }
 }
