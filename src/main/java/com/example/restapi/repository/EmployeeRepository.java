@@ -14,13 +14,13 @@ public class EmployeeRepository {
 
 
     public EmployeeRepository() {
-        this.employees.add(new Employee(1, "Marcus", 22, "Male", 298912220));
-        this.employees.add(new Employee(2, "Marcus2", 22, "Male", 298912220));
-        this.employees.add(new Employee(3, "Marcus3", 22, "Male", 298912220));
-        this.employees.add(new Employee(4, "Marcus4", 22, "Male", 298912220));
-        this.employees.add(new Employee(5, "Marcus5", 22, "Male", 298912220));
-        this.employees.add(new Employee(6, "Marcus6", 22, "Male", 298912220));
-        this.employees.add(new Employee(7, "Marcus7", 22, "Male", 298912220));
+        this.employees.add(new Employee(1, "Gloria1", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(2, "Gloria2", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(3, "Gloria3", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(4, "Gloria4", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(5, "Gloria5", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(6, "Gloria6", 22, "Female", 10000, 1));
+        this.employees.add(new Employee(7, "Gloria7", 22, "Female", 10000, 1));
     }
 
     public List<Employee> findAll() {

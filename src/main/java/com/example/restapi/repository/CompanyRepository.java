@@ -15,7 +15,7 @@ public class CompanyRepository {
 
     private List<Company> companies = new ArrayList<>();
 
-    List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee(1, "Marcus", 22, "Male", 298912220), new Employee(12, "Marcus2", 22, "Male", 298912220)));
+    List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee(1, "Marcus", 22, "Male", 298912220, 1), new Employee(12, "Marcus2", 22, "Male", 298912220, 1)));
 
     public CompanyRepository() {
         this.companies.add(new Company(1, "Spring", employees));

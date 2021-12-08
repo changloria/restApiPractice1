@@ -1,8 +1,5 @@
 package com.example.restapi.entity;
 
-
-import com.example.restapi.entity.Employee;
-
 import java.util.List;
 
 public class Company {

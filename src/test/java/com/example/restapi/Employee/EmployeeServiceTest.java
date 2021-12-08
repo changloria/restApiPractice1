@@ -30,7 +30,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_all_employees_when_find_all_given_employees() {
         //given
-        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213)));
+        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213, 1)));
         given(mockEmployeeRepository.findAll())
                 .willReturn(employees);
         //when
@@ -42,7 +42,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_getById_given_employees() {
         //given
-        Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
+        Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213, 1);
 
         given(mockEmployeeRepository.findById(1))
                 .willReturn(employee);
@@ -55,7 +55,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employees_when_getByGender_given_employees_and_gender() {
         //given
-        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213)));
+        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee(1, "Marcus", 19, "Male", 1920213, 1)));
 
         given(mockEmployeeRepository.findByGender("Male"))
                 .willReturn(employees);
@@ -68,7 +68,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employees_when_getByPage_given_employees() {
         //given
-        List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee(1, "Marcus", 19, "Male", 1920213), new Employee(2, "Gloria", 19, "Female", 10000), new Employee(3, "Marcus2", 19, "Male", 1920213)));
+        List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee(1, "Marcus", 19, "Male", 1920213, 1), new Employee(2, "Gloria", 19, "Female", 10000, 1), new Employee(3, "Lily", 19, "Female", 30000, 1)));
 
         Integer page = 1;
         Integer pageSize = 2;
@@ -84,8 +84,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
-        Employee employee = new Employee(1, "Marcus", 19, "Male", 1920213);
-        Employee updatedEmployee = new Employee(1, "Marcus", 25, "Male", 9999999);
+        Employee employee = new Employee(1, "Marcus", 19, "Male", 20000,1);
+        Employee updatedEmployee = new Employee(1, "Marcus", 20, "Male", 26000, 1);
         given(mockEmployeeRepository.findById(any()))
                 .willReturn(employee);
         employee.setAge(updatedEmployee.getAge());
@@ -104,7 +104,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_add_employee_given_new_employee() {
         //given
-        Employee newEmployee = new Employee(1, "Marcus", 25, "Male", 9999999);
+        Employee newEmployee = new Employee(1, "Marcus", 25, "Male", 9999999, 1);
         given(mockEmployeeRepository.create(newEmployee))
                 .willReturn(newEmployee);
 
@@ -119,7 +119,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_nothing_when_delete_given_id_employee() {
         //given
-        Employee employee = new Employee(1, "Marcus", 25, "Male", 9999999);
+        Employee employee = new Employee(1, "Marcus", 25, "Male", 9999999, 1);
 
         //when
         employeeService.delete(employee.getId());
