@@ -47,6 +47,7 @@ public class CompanyRepository {
     public Company create(Company newCompany) {
         Integer nextId = companies.stream().mapToInt(Company::getId).max().orElse(0) + 1;
         newCompany.setId(nextId);
+        newCompany.setEmployees(employeeRepository.findByCompanyId(newCompany.getId()));
         this.companies.add(newCompany);
         return newCompany;
     }
