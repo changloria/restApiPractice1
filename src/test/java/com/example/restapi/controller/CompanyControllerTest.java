@@ -65,24 +65,18 @@ public class CompanyControllerTest {
     @Test
     void should_get_company_when_perform_getById_given_company_and_id() throws Exception {
         //given
-        List<Employee> employees = getEmployees();
         Company company1 = new Company("1", "Spring");
         Company company2 = new Company("2", "Spring2");
 
-        companyRepository.create(company1);
-        companyRepository.create(company2);
+        companyRepositoryNew.insert(company1);
+        companyRepositoryNew.insert(company2);
 
         //when
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", company1.getId()))
+        mockMvc.perform(get("/companies/{id}", company1.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("Spring"))
-                .andExpect(jsonPath("$.employees[0].id").value(employees.get(0).getId()))
-                .andExpect(jsonPath("$.employees[0].name").value(employees.get(0).getName()))
-                .andExpect(jsonPath("$.employees[0].gender").value(employees.get(0).getGender()))
-                .andExpect(jsonPath("$.employees[0].salary").value(employees.get(0).getSalary()))
-                .andExpect(jsonPath("$.employees[0].companyId").value(employees.get(0).getCompanyId()));
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("Spring"));
     }
 
     @Test
