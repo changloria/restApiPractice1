@@ -17,9 +17,9 @@ public class CompanyRepository {
     private List<Company> companies = new ArrayList<>();
 
     public CompanyRepository() {
-        this.companies.add(new Company(1, "Spring"));
-        this.companies.add(new Company(2, "Spring2"));
-        this.companies.add(new Company(3, "Spring3"));
+        this.companies.add(new Company("1", "Spring"));
+        this.companies.add(new Company("2", "Spring2"));
+        this.companies.add(new Company("3", "Spring3"));
     }
 
     public List<Company> findAll() {
@@ -27,11 +27,11 @@ public class CompanyRepository {
         return this.companies;
     }
 
-    public Company findById(Integer id) {
+    public Company findById(String id) {
         return companies.stream().filter(company1 -> company1.getId().equals(id)).findFirst().orElseThrow(NoCompanyFoundException::new);
     }
 
-    public List<Employee> findEmployeeById(Integer id) {
+    public List<Employee> findEmployeeById(String id) {
         return employeeRepository.findByCompanyId(id);
     }
 
@@ -42,7 +42,7 @@ public class CompanyRepository {
     }
 
     public Company create(Company newCompany) {
-        Integer nextId = companies.stream().mapToInt(Company::getId).max().orElse(0) + 1;
+        String nextId = String.valueOf(companies.size() + 1);
         newCompany.setId(nextId);
         newCompany.setEmployees(employeeRepository.findByCompanyId(newCompany.getId()));
         this.companies.add(newCompany);
@@ -50,14 +50,14 @@ public class CompanyRepository {
     }
 
 
-    public Company save(Integer id, Company updatedCompany) {
+    public Company save(String id, Company updatedCompany) {
         Company company = findById(id);
         companies.remove(company);
         companies.add(updatedCompany);
         return updatedCompany;
     }
 
-    public void delete(Integer id) {
+    public void delete(String id) {
         Company company = findById(id);
         companies.remove(company);
     }

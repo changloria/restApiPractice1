@@ -37,8 +37,8 @@ public class CompanyControllerTest {
 
     List<Employee> getEmployees(){
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Marcus", 19, "Male", 1920213, 1));
-        employees.add(new Employee(2, "Gloria", 22, "Female", 100000, 1));
+        employees.add(new Employee("1", "Marcus", 19, "Male", 1920213, "1"));
+        employees.add(new Employee("2", "Gloria", 22, "Female", 100000, "1"));
         return employees;
     }
 
@@ -46,8 +46,8 @@ public class CompanyControllerTest {
     void should_get_all_companies_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = getEmployees();
-        Company company1 = new Company(1, "Spring");
-        Company company2 = new Company(2, "Spring2");
+        Company company1 = new Company("1", "Spring");
+        Company company2 = new Company("2", "Spring2");
 
         companyRepository.create(company1);
         companyRepository.create(company2);
@@ -70,8 +70,8 @@ public class CompanyControllerTest {
     void should_get_company_when_perform_getById_given_company_and_id() throws Exception {
         //given
         List<Employee> employees = getEmployees();
-        Company company1 = new Company(1, "Spring");
-        Company company2 = new Company(2, "Spring2");
+        Company company1 = new Company("1", "Spring");
+        Company company2 = new Company("2", "Spring2");
 
         companyRepository.create(company1);
         companyRepository.create(company2);
@@ -92,15 +92,15 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_employee_under_company_when_obtain_employee_list_given_employees_and_company() throws Exception {
         //given
-        Company company1 = new Company(1, "Spring");
+        Company company1 = new Company("1", "Spring");
 
-        companyRepository.findEmployeeById(1);
+        companyRepository.findEmployeeById("1");
         //when`
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees" , company1.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$", hasSize(7)))
-                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].id").value("1"))
                 .andExpect(jsonPath("$[0].name").value("Marcus"))
                 .andExpect(jsonPath("$[0].age").value("19"))
                 .andExpect(jsonPath("$[0].gender").value("Male"))
@@ -110,9 +110,9 @@ public class CompanyControllerTest {
 
     @Test
     void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
-        Company company1 = new Company(1, "Spring");
-        Company company2 = new Company(2, "Spring2");
-        Company company3 = new Company(3, "Spring3");
+        Company company1 = new Company("1", "Spring");
+        Company company2 = new Company("2", "Spring2");
+        Company company3 = new Company("3", "Spring3");
 
         companyRepository.create(company1);
         companyRepository.create(company2);
@@ -127,7 +127,7 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].name").value("Spring"))
                 .andExpect(jsonPath("$[0].employees", hasSize(7)))
-                .andExpect(jsonPath("$[0].employees[0].id").isNumber())
+                .andExpect(jsonPath("$[0].employees[0].id").value("1"))
                 .andExpect(jsonPath("$[0].employees[0].name").value("Marcus"))
                 .andExpect(jsonPath("$[0].employees[0].gender").value("Male"))
                 .andExpect(jsonPath("$[0].employees[0].salary").value("1920213"))
@@ -180,9 +180,9 @@ public class CompanyControllerTest {
     void should_return_changed_company_when_perform_put_given_company_id() throws Exception {
         //given
         List<Employee> employees = getEmployees();
-        Company company1 = new Company(1, "Spring");
-        Company company2 = new Company(2, "Spring2");
-        Company company3 = new Company(3, "Spring3");
+        Company company1 = new Company("1", "Spring");
+        Company company2 = new Company("2", "Spring2");
+        Company company3 = new Company("3", "Spring3");
 
         companyRepository.create(company1);
         companyRepository.create(company2);
@@ -205,9 +205,9 @@ public class CompanyControllerTest {
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
         List<Employee> employees = getEmployees();
-        Company company1 = new Company(1, "Spring");
-        Company company2 = new Company(2, "Spring2");
-        Company company3 = new Company(3, "Spring3");
+        Company company1 = new Company("1", "Spring");
+        Company company2 = new Company("2", "Spring2");
+        Company company3 = new Company("3", "Spring3");
 
         companyRepository.create(company1);
         companyRepository.create(company2);

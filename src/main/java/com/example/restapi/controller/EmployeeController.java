@@ -1,6 +1,9 @@
 package com.example.restapi.controller;
 
+import com.example.restapi.dto.EmployeeRequest;
+import com.example.restapi.dto.EmployeeResponse;
 import com.example.restapi.entity.Employee;
+import com.example.restapi.mapper.EmployeeMapper;
 import com.example.restapi.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeService employeeService;
+    private EmployeeMapper employeeMapper;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -22,15 +26,14 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
-
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-        return employeeService.findById(id);
+    public EmployeeResponse getEmployeeById(@PathVariable String id) {
+        return employeeMapper.toResponse(employeeService.findById(id));
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> getAllEmployeesByGender(@RequestParam String gender) {
-        return employeeService.findByGender(gender);
+    public EmployeeResponse getAllEmployeesByGender(@RequestParam String gender) {
+        return employeeMapper.toResponse((Employee) employeeService.findByGender(gender));
     }
 
     @GetMapping(params = {"page", "pageSize"})
@@ -38,20 +41,20 @@ public class EmployeeController {
         return employeeService.findByPage(page, pageSize);
     }
 
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee newEmployee) {
-        return employeeService.create(newEmployee);
+    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.create(employeeMapper.toEntity(employeeRequest));
     }
 
     @PutMapping("/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-        return employeeService.edit(id, updatedEmployee);
+    public Employee editEmployee(@PathVariable String id, @RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.edit(id, employeeMapper.toEntity(employeeRequest));
     }
 
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Integer id) {
+    public void deleteEmployee(@PathVariable String id) {
         employeeService.delete(id);
     }
 }

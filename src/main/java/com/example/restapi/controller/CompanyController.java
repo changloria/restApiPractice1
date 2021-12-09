@@ -1,8 +1,11 @@
 package com.example.restapi.controller;
 
+import com.example.restapi.dto.CompanyResponse;
 import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
+import com.example.restapi.mapper.CompanyMapper;
 import com.example.restapi.repository.CompanyRepository;
+import com.example.restapi.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +15,12 @@ import java.util.List;
 @RequestMapping("companies")
 public class CompanyController {
 
+    private CompanyMapper companyMapper;
     private CompanyRepository companyRepository;
+    private CompanyService companyService;
 
-    public CompanyController(CompanyRepository companyRepository) {
+    public CompanyController(CompanyRepository companyRepository, CompanyMapper companyMapper) {
+        this.companyMapper = companyMapper;
         this.companyRepository = companyRepository;
     }
 
@@ -24,12 +30,14 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Integer id) {
-        return companyRepository.findById(id);
+    public CompanyResponse getCompanyById(@PathVariable String id) {
+        Company company = companyRepository.findById(id);
+        List<Employee> employees = companyService.findEmployeeById(id);
+        return companyMapper.toResponse(company, employees);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer id) {
+    public List<Employee> getAllEmployeesByCompanyId(@PathVariable String id) {
         return companyRepository.findEmployeeById(id);
     }
 
@@ -45,7 +53,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
+    public Company editCompany(@PathVariable String id, @RequestBody Company updatedCompany) {
         Company company = companyRepository.findById(id);
 
         if (company.getName() != null) {
@@ -56,7 +64,7 @@ public class CompanyController {
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteCompany(@PathVariable Integer id) {
+    public void deleteCompany(@PathVariable String id) {
         companyRepository.delete(id);
     }
 }

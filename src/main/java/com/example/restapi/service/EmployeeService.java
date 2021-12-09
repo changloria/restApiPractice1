@@ -1,7 +1,10 @@
 package com.example.restapi.service;
 
 import com.example.restapi.entity.Employee;
+import com.example.restapi.exception.NoEmployeeFoundException;
 import com.example.restapi.repository.EmployeeRepository;
+import com.example.restapi.repository.EmployeeRepositoryNew;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,47 +12,49 @@ import java.util.List;
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    private EmployeeRepositoryNew employeeRepositoryNew;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeRepositoryNew employeeRepositoryNew) {
         this.employeeRepository = employeeRepository;
+        this.employeeRepositoryNew = employeeRepositoryNew;
     }
 
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return employeeRepositoryNew.findAll();
     }
 
-    public Employee edit(Integer id, Employee updatedEmployee) {
-        Employee employee = employeeRepository.findById(id);
+    public Employee edit(String id, Employee updatedEmployee) {
+        Employee employee = findById(id);
         if (updatedEmployee.getAge() != null) {
             employee.setAge(updatedEmployee.getAge());
         }
         if (updatedEmployee.getSalary() != null) {
             employee.setSalary(updatedEmployee.getSalary());
         }
-        return employeeRepository.save(id, employee);
+        return employeeRepositoryNew.save(employee);
     }
 
-    public Employee findById(Integer id) {
-        return employeeRepository.findById(id);
+    public Employee findById(String id) {
+        return employeeRepositoryNew.findById(id).orElseThrow(NoEmployeeFoundException::new);
     }
 
     public List<Employee> findByGender(String gender) {
-        return employeeRepository.findByGender(gender);
+        return employeeRepositoryNew.findAllByGender(gender);
     }
 
     public List<Employee> findByPage(Integer page, Integer pageSize) {
-        return employeeRepository.findByPage(page, pageSize);
+        return employeeRepositoryNew.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
-    public List<Employee> findByCompanyId(Integer companyId) {
-        return employeeRepository.findByCompanyId(companyId);
+    public List<Employee> findByCompanyId(String companyId) {
+        return employeeRepositoryNew.findAllByCompanyId(companyId);
     }
 
     public Employee create(Employee newEmployee) {
-        return employeeRepository.create(newEmployee);
+        return employeeRepositoryNew.insert(newEmployee);
     }
 
-    public void delete(int id) {
-        employeeRepository.delete(id);
+    public void delete(String id) {
+        employeeRepositoryNew.deleteById(id);
     }
 }

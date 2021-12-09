@@ -14,13 +14,13 @@ public class EmployeeRepository {
 
 
     public EmployeeRepository() {
-        this.employees.add(new Employee(1, "Marcus", 19, "Male", 1920213, 1));
-        this.employees.add(new Employee(2, "Gloria2", 22, "Female", 10000, 1));
-        this.employees.add(new Employee(3, "Gloria3", 22, "Female", 10000, 1));
-        this.employees.add(new Employee(4, "Gloria4", 22, "Female", 10000, 1));
-        this.employees.add(new Employee(5, "Gloria5", 22, "Female", 10000, 1));
-        this.employees.add(new Employee(6, "Gloria6", 22, "Female", 10000, 1));
-        this.employees.add(new Employee(7, "Gloria7", 22, "Female", 10000, 1));
+        this.employees.add(new Employee("1", "Marcus", 19, "Male", 1920213, "1"));
+        this.employees.add(new Employee("2", "Gloria2", 22, "Female", 10000,"1"));
+        this.employees.add(new Employee("3", "Gloria3", 22, "Female", 10000,"1"));
+        this.employees.add(new Employee("4", "Gloria4", 22, "Female", 10000,"1"));
+        this.employees.add(new Employee("5", "Gloria5", 22, "Female", 10000,"1"));
+        this.employees.add(new Employee("6", "Gloria6", 22, "Female", 10000,"1"));
+        this.employees.add(new Employee("7", "Gloria7", 22, "Female", 10000,"1"));
     }
 
     public List<Employee> findAll() {
@@ -28,7 +28,7 @@ public class EmployeeRepository {
     }
 
 
-    public Employee findById(Integer id) {
+    public Employee findById(String id) {
         return employees.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElseThrow(NoEmployeeFoundException::new);
     }
 
@@ -41,20 +41,20 @@ public class EmployeeRepository {
     }
 
     public Employee create(Employee newEmployee) {
-        Integer nextId = employees.stream().mapToInt(Employee::getId).max().orElse(0) + 1;
+        String nextId = String.valueOf(employees.size() + 1);
         newEmployee.setId(nextId);
         this.employees.add(newEmployee);
         return newEmployee;
     }
 
-    public Employee save(Integer id, Employee updatedEmployee) {
+    public Employee save(String id, Employee updatedEmployee) {
         Employee employee = findById(id);
         employees.remove(employee);
         employees.add(updatedEmployee);
         return updatedEmployee;
     }
 
-    public void delete(Integer id) {
+    public void delete(String id) {
         Employee employee = findById(id);
         employees.remove(employee);
     }
@@ -63,7 +63,7 @@ public class EmployeeRepository {
         employees.clear();
     }
 
-    public List<Employee> findByCompanyId(Integer companyId) {
+    public List<Employee> findByCompanyId(String companyId) {
         return employees.stream().filter(employee -> employee.getCompanyId().equals(companyId)).collect(Collectors.toList());
     }
 }
