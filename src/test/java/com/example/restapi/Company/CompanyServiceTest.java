@@ -4,32 +4,28 @@ import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
 import com.example.restapi.service.CompanyService;
+import com.example.restapi.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
     @Mock
     CompanyRepository mockCompanyRepository;
+
+    @Mock
+    EmployeeService mockEmployeeService;
 
     @InjectMocks
     CompanyService companyService;
@@ -67,11 +63,15 @@ public class CompanyServiceTest {
 
         given(mockCompanyRepository.findById(1))
                 .willReturn(companies.get(0));
+        given(mockEmployeeService.findByCompanyId(1))
+                .willReturn(getEmployees());
 
         //when
         Company actual = companyService.findById(1);
+
         //then
-        assertEquals(companies.get(0), actual);
+        assertEquals(companies.get(0).getEmployees(), actual.getEmployees());
+        assertEquals(7, actual.getEmployees().size());
     }
 
     @Test
@@ -133,6 +133,7 @@ public class CompanyServiceTest {
         Company actual = companyService.save(1, updatedCompany);
         //then
         assertEquals(updatedCompany, actual);
+        assertEquals(updatedCompany.getName(), actual.getName());
 
     }
 
@@ -140,10 +141,9 @@ public class CompanyServiceTest {
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
         Company company = new Company(1, "OOCL");
-
+        willDoNothing().given(mockCompanyRepository).delete(company.getId());
         //when
         companyService.delete(company.getId());
-
         //then
         verify(mockCompanyRepository).delete(company.getId());
     }

@@ -4,14 +4,18 @@ package com.example.restapi.service;
 import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CompanyService {
     private CompanyRepository companyRepository;
+    private EmployeeService employeeService;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, EmployeeService employeeService) {
         this.companyRepository = companyRepository;
+        this.employeeService = employeeService;
     }
 
     public List<Company> findAll() {
@@ -19,7 +23,9 @@ public class CompanyService {
     }
 
     public Company findById(int companyId) {
-        return companyRepository.findById(companyId);
+        Company company = companyRepository.findById(companyId);
+        company.setEmployees(employeeService.findByCompanyId(companyId));
+        return company;
     }
 
     public List<Employee> findEmployeeById(int id) {

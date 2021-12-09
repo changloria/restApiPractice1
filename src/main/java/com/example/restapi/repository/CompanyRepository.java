@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,9 +28,7 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id) {
-        Company company = companies.stream().filter(company1 -> company1.getId().equals(id)).findFirst().orElseThrow(NoCompanyFoundException::new);
-        company.setEmployees(employeeRepository.findByCompanyId(company.getId()));
-        return company;
+        return companies.stream().filter(company1 -> company1.getId().equals(id)).findFirst().orElseThrow(NoCompanyFoundException::new);
     }
 
     public List<Employee> findEmployeeById(Integer id) {
