@@ -108,27 +108,18 @@ public class CompanyControllerTest {
         Company company2 = new Company("2", "Spring2");
         Company company3 = new Company("3", "Spring3");
 
-        companyRepository.create(company1);
-        companyRepository.create(company2);
-        companyRepository.create(company3);
+        companyRepositoryNew.insert(company1);
+        companyRepositoryNew.insert(company2);
+        companyRepositoryNew.insert(company3);
 
-        String page = "1";
+        String page = "0";
         String pageSize = "2";
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies?page="+page+"&pageSize="+pageSize))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+        mockMvc.perform(get("/companies?page="+page+"&pageSize="+pageSize))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("Spring"))
-                .andExpect(jsonPath("$[0].employees", hasSize(7)))
-                .andExpect(jsonPath("$[0].employees[0].id").value("1"))
-                .andExpect(jsonPath("$[0].employees[0].name").value("Marcus"))
-                .andExpect(jsonPath("$[0].employees[0].gender").value("Male"))
-                .andExpect(jsonPath("$[0].employees[0].salary").value("1920213"))
-                .andExpect(jsonPath("$[0].employees[0].companyId").value("1"))
-                .andExpect(jsonPath("$[1].id").isNumber())
-                .andExpect(jsonPath("$[1].name").value("Spring2"))
-                .andExpect(jsonPath("$[1].employees", hasSize(0)));
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Spring"));
     }
 
     @Test
