@@ -3,6 +3,9 @@ package com.example.restapi.controller;
 import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
+import com.example.restapi.repository.CompanyRepositoryNew;
+import com.example.restapi.repository.EmployeeRepositoryNew;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,11 +30,15 @@ public class CompanyControllerTest {
     @Autowired
     CompanyRepository companyRepository;
     @Autowired
+    CompanyRepositoryNew companyRepositoryNew;
+    @Autowired
+    EmployeeRepositoryNew employeeRepositoryNew;
+    @Autowired
     MockMvc mockMvc;
 
-    @BeforeEach
+    @AfterEach
     void cleanRepository() {
-        companyRepository.clearAll();
+        companyRepositoryNew.deleteAll();
     }
 
     List<Employee> getEmployees(){
@@ -45,25 +51,15 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_companies_when_perform_get_given_companies() throws Exception {
         //given
-        List<Employee> employees = getEmployees();
-        Company company1 = new Company("1", "Spring");
-        Company company2 = new Company("2", "Spring2");
-
-        companyRepository.create(company1);
-        companyRepository.create(company2);
-
-        //when
+        Company company = new Company("1","Spring");
+        companyRepositoryNew.insert(company);
+        //When
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("Spring"))
-                .andExpect(jsonPath("$[0].employees[0].id").value(employees.get(0).getId()))
-                .andExpect(jsonPath("$[0].employees[0].name").value(employees.get(0).getName()))
-                .andExpect(jsonPath("$[0].employees[0].gender").value(employees.get(0).getGender()))
-                .andExpect(jsonPath("$[0].employees[0].salary").value(employees.get(0).getSalary()))
-                .andExpect(jsonPath("$[0].employees[0].companyId").value(employees.get(0).getCompanyId()));
+        mockMvc.perform(get("/companies"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Spring"));
     }
 
     @Test
