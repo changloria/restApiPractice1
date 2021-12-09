@@ -46,7 +46,7 @@ public class EmployeeService {
         return employeeRepositoryNew.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
-    public List<Employee> findByCompanyId(String companyId) {
+    public List<Employee> findEmployeesByCompanyId(String companyId) {
         return employeeRepositoryNew.findAllByCompanyId(companyId);
     }
 

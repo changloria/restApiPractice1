@@ -4,12 +4,12 @@ import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
 import com.example.restapi.repository.CompanyRepositoryNew;
-import com.example.restapi.service.CompanyService;
-import com.example.restapi.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -65,17 +65,16 @@ public class CompanyServiceTest {
         companies.add(new Company("1", "OOCL"));
         companies.add(new Company("2", "OOCL2"));
 
-        given(mockCompanyRepository.findById("1"))
-                .willReturn(companies.get(0));
-        given(mockEmployeeService.findByCompanyId("1"))
+        given(companyRepositoryNew.findById("1"))
+                .willReturn(java.util.Optional.ofNullable(companies.get(0)));
+        given(mockEmployeeService.findEmployeesByCompanyId("1"))
                 .willReturn(getEmployees());
 
         //when
-        Company actual = companyService.findById("1");
+        Company actual = companyService.findById(companies.get(0).getId());
 
         //then
         assertEquals(companies.get(0).getEmployees(), actual.getEmployees());
-        assertEquals(7, actual.getEmployees().size());
     }
 
     @Test
@@ -86,7 +85,7 @@ public class CompanyServiceTest {
         companies.add(new Company("1", "OOCL"));
         companies.add(new Company("2", "OOCL2"));
 
-        given(mockCompanyRepository.findEmployeeById("1"))
+        given(mockEmployeeService.findEmployeesByCompanyId("1"))
                 .willReturn(employees);
         //when`
         List<Employee> actual = companyService.findEmployeeById("1");
@@ -104,8 +103,8 @@ public class CompanyServiceTest {
         Integer page = 1;
         Integer pageSize = 2;
 
-        given(mockCompanyRepository.findByPage(page, pageSize))
-                .willReturn(companies);
+        given(companyRepositoryNew.findAll(PageRequest.of(page, pageSize)))
+                .willReturn(new PageImpl<>(companies, PageRequest.of(page,pageSize),pageSize));
 
         //when`
         List<Company> actual = companyService.findByPage(page, pageSize);
@@ -117,7 +116,7 @@ public class CompanyServiceTest {
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
         Company newCompany = new Company("3", "OOCL3");
-        given(mockCompanyRepository.create(newCompany))
+        given(companyRepositoryNew.save(newCompany))
                 .willReturn(newCompany);
         //when
         Company actual = companyService.create(newCompany);
@@ -129,10 +128,10 @@ public class CompanyServiceTest {
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
         //given
         Company updatedCompany = new Company("1", "OOCLL");
-        given(mockCompanyRepository.save("1", updatedCompany))
+        given(companyRepositoryNew.save(updatedCompany))
                 .willReturn(updatedCompany);
-        given(mockCompanyRepository.findById("1"))
-                .willReturn(updatedCompany);
+        given(companyRepositoryNew.findById("1"))
+                .willReturn(java.util.Optional.of(updatedCompany));
         //when
         Company actual = companyService.save("1", updatedCompany);
         //then
@@ -145,11 +144,11 @@ public class CompanyServiceTest {
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
         Company company = new Company("1", "OOCL");
-        willDoNothing().given(mockCompanyRepository).delete(company.getId());
+        willDoNothing().given(companyRepositoryNew).deleteById(company.getId());
         //when
         companyService.delete(company.getId());
         //then
-        verify(mockCompanyRepository).delete(company.getId());
+        verify(companyRepositoryNew).deleteById(company.getId());
     }
 
 }
