@@ -165,14 +165,9 @@ public class CompanyControllerTest {
     @Test
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
-        List<Employee> employees = getEmployees();
         Company company1 = new Company("1", "Spring");
-        Company company2 = new Company("2", "Spring2");
-        Company company3 = new Company("3", "Spring3");
 
-        companyRepository.create(company1);
-        companyRepository.create(company2);
-        companyRepository.create(company3);
+        companyRepositoryNew.insert(company1);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company1.getId()))
