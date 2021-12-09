@@ -82,19 +82,23 @@ public class CompanyControllerTest {
     @Test
     void should_get_all_employee_under_company_when_obtain_employee_list_given_employees_and_company() throws Exception {
         //given
-        Company company1 = new Company("1", "Spring");
+        Company company = new Company("1", "Spring");
+        companyRepositoryNew.insert(company);
 
-        companyRepository.findEmployeeById("1");
+        Employee employee = new Employee("1", "Gloria", 18, "Female", 100000, "1");
+        Employee employee2 = new Employee("2", "Lily", 18, "Female", 20000, "2");
+        employeeRepositoryNew.insert(employee);
+        employeeRepositoryNew.insert(employee2);
         //when`
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees" , company1.getId()))
+        mockMvc.perform(get("/companies/{id}/employees" , company.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$", hasSize(7)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value("1"))
-                .andExpect(jsonPath("$[0].name").value("Marcus"))
-                .andExpect(jsonPath("$[0].age").value("19"))
-                .andExpect(jsonPath("$[0].gender").value("Male"))
-                .andExpect(jsonPath("$[0].salary").value("1920213"))
+                .andExpect(jsonPath("$[0].name").value("Gloria"))
+                .andExpect(jsonPath("$[0].age").value("18"))
+                .andExpect(jsonPath("$[0].gender").value("Female"))
+                .andExpect(jsonPath("$[0].salary").value("100000"))
                 .andExpect(jsonPath("$[0].companyId").value("1"));
     }
 
