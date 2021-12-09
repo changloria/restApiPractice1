@@ -10,7 +10,14 @@ import org.springframework.stereotype.Component;
 public class EmployeeMapper {
     public Employee toEntity(EmployeeRequest employeeRequest){
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequest, employee);
+//        BeanUtils.copyProperties(employeeRequest, employee);
+        employee.setName(employeeRequest.getName());
+        employee.setId(employeeRequest.getId());
+        employee.setAge(employeeRequest.getAge());
+        employee.setGender(employeeRequest.getGender());
+        employee.setSalary(employeeRequest.getSalary());
+        employee.setCompanyId(employeeRequest.getCompanyID());
+
         return employee;
     }
     public EmployeeResponse toResponse(Employee employee){

@@ -1,4 +1,4 @@
-package com.example.restapi.Company;
+package com.example.restapi.controller;
 
 import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;

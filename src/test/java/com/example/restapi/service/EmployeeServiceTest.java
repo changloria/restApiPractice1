@@ -1,4 +1,4 @@
-package com.example.restapi.Employee;
+package com.example.restapi.service;
 
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.EmployeeRepository;
