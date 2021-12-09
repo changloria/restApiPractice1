@@ -126,25 +126,9 @@ public class CompanyControllerTest {
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
         String company = "{\n" +
-                "    \"id\": 1,\n" +
-                "    \"name\": \"OOCL\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"id\": 1,\n" +
-                "            \"age\": 23,\n" +
-                "            \"name\": \"Mary\",\n" +
-                "            \"gender\": \"Female\",\n" +
-                "            \"salary\": 10000\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"id\": 2,\n" +
-                "            \"age\": 22,\n" +
-                "            \"name\": \"Gloria\",\n" +
-                "            \"gender\": \"Female\",\n" +
-                "            \"salary\": 34000\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
+                "        \"id\": \"1\",\n" +
+                "        \"name\": \"OOCL\"\n" +
+                "    }";
 
         //when
         //then
@@ -152,13 +136,8 @@ public class CompanyControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(company))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.name").value("OOCL"))
-                .andExpect(jsonPath("$.employees[0].id").value("1"))
-                .andExpect(jsonPath("$.employees[0].age").value("23"))
-                .andExpect(jsonPath("$.employees[0].name").value("Mary"))
-                .andExpect(jsonPath("$.employees[0].gender").value("Female"))
-                .andExpect(jsonPath("$.employees[0].salary").value("10000"));
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("OOCL"));
     }
 
     @Test
