@@ -32,7 +32,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_all_employees_when_find_all_given_employees() {
         //given
-        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee("1", "Marcus", 19, "Male", 1920213, "1")));
+        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee("Marcus", 19, "Male", 1920213, "1")));
         given(employeeRepository.findAll())
                 .willReturn(employees);
         //when
@@ -44,7 +44,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_getById_given_employees() {
         //given
-        Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213, "1");
+        Employee employee = new Employee("Marcus", 19, "Male", 1920213, "1");
 
         given(employeeRepository.findById("1"))
                 .willReturn(java.util.Optional.of(employee));
@@ -57,7 +57,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employees_when_getByGender_given_employees_and_gender() {
         //given
-        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee("1", "Marcus", 19, "Male", 1920213, "1")));
+        List<Employee> employees = new ArrayList<>(Collections.singletonList(new Employee("Marcus", 19, "Male", 1920213, "1")));
 
         given(employeeRepository.findAllByGender("Male"))
                 .willReturn(employees);
@@ -70,7 +70,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employees_when_getByPage_given_employees() {
         //given
-        List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee("1", "Marcus", 19, "Male", 1920213, "1"), new Employee("2", "Gloria", 19, "Female", 10000, "1"), new Employee("3", "Lily", 19, "Female", 30000, "1")));
+        List<Employee> employees = new ArrayList<>(Arrays.asList(new Employee( "Marcus", 19, "Male", 1920213, "1"), new Employee("Gloria", 19, "Female", 10000, "1"), new Employee("Lily", 19, "Female", 30000, "1")));
 
         Pageable pageable = PageRequest.of(1,1);
         given(employeeRepository.findAll(pageable))
@@ -88,8 +88,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_updated_employee_when_edit_employee_given_updated_employee() {
         //given
-        Employee employee = new Employee("1", "Marcus", 19, "Male", 20000,"1");
-        Employee updatedEmployee = new Employee("1", "Marcus", 20, "Male", 26000, "1");
+        Employee employee = new Employee("Marcus", 19, "Male", 20000,"1");
+        Employee updatedEmployee = new Employee("Marcus", 20, "Male", 26000, "1");
         given(employeeRepository.findById(any()))
                 .willReturn(java.util.Optional.of(employee));
         employee.setAge(updatedEmployee.getAge());
@@ -108,7 +108,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_add_employee_given_new_employee() {
         //given
-        Employee newEmployee = new Employee("1", "Marcus", 25, "Male", 9999999, "1");
+        Employee newEmployee = new Employee("Marcus", 25, "Male", 9999999, "1");
         given(employeeRepository.insert(newEmployee))
                 .willReturn(newEmployee);
 
@@ -123,7 +123,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_nothing_when_delete_given_id_employee() {
         //given
-        Employee employee = new Employee("1", "Marcus", 25, "Male", 9999999, "1");
+        Employee employee = new Employee("Marcus", 25, "Male", 9999999, "1");
 
         //when
         employeeService.delete(employee.getId());

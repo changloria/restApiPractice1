@@ -35,8 +35,7 @@ public class Company {
         this.employees = employee;
     }
 
-    public Company(String id, String name) {
-        this.id = id;
+    public Company(String name) {
         this.name = name;
     }
 

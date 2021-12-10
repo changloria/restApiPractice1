@@ -35,8 +35,8 @@ public class EmployeeControllerTest {
     @Test
     void should_get_all_employees_when_perform_get_given_employees() throws Exception {
         //given
-        Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1");
-        Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000, "1");
+        Employee employee = new Employee("Marcus", 19, "Male", 1920213,"1");
+        Employee employee2 = new Employee("Gloria", 22, "Female", 1000000, "1");
         employeeRepository.insert(employee);
         employeeRepository.insert(employee2);
 
@@ -45,7 +45,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value("1"))
+                .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("Marcus"))
                 .andExpect(jsonPath("$[0].age").value("19"))
                 .andExpect(jsonPath("$[0].gender").value("Male"));
@@ -54,14 +54,14 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employee_when_perform_getID_given_employee_and_id() throws Exception {
         //given
-        Employee employee = new Employee("1", "Gloria", 22, "female", 1000000, "1");
+        Employee employee = new Employee("Gloria", 22, "female", 1000000, "1");
         employeeRepository.insert(employee);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("Gloria"))
                 .andExpect(jsonPath("$.age").value("22"))
                 .andExpect(jsonPath("$.gender").value("female"));
@@ -71,8 +71,8 @@ public class EmployeeControllerTest {
     @Test
     void should_get_all_employees_when_perform_getByGender_given_employees_and_gender() throws Exception {
         //given
-        Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1");
-        Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
+        Employee employee = new Employee( "Marcus", 19, "Male", 1920213,"1");
+        Employee employee2 = new Employee("Gloria", 22, "Female", 1000000,"1");
 
         employeeRepository.insert(employee);
         employeeRepository.insert(employee2);
@@ -80,7 +80,7 @@ public class EmployeeControllerTest {
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", employee.getGender()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$[0].id").value("1"))
+                .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("Marcus"))
                 .andExpect(jsonPath("$[0].age").value("19"))
                 .andExpect(jsonPath("$[0].gender").value("Male"));
@@ -89,9 +89,9 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employee_list_when_perform_getByPage_given_employees() throws Exception {
         //given
-        Employee employee1 = new Employee("1", "Marcus", 19, "Male", 1920213,"1" );
-        Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
-        Employee employee3 = new Employee("3", "Linne", 22, "Female", 1000000,"1");
+        Employee employee1 = new Employee( "Marcus", 19, "Male", 1920213,"1" );
+        Employee employee2 = new Employee( "Gloria", 22, "Female", 1000000,"1");
+        Employee employee3 = new Employee( "Linne", 22, "Female", 1000000,"1");
 
         employeeRepository.insert(employee1);
         employeeRepository.insert(employee2);
@@ -105,11 +105,11 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value("1"))
+                .andExpect(jsonPath("$[0].id").isString())
                 .andExpect(jsonPath("$[0].name").value("Marcus"))
                 .andExpect(jsonPath("$[0].age").value("19"))
                 .andExpect(jsonPath("$[0].gender").value("Male"))
-                .andExpect(jsonPath("$[1].id").value("2"))
+                .andExpect(jsonPath("$[1].id").isString())
                 .andExpect(jsonPath("$[1].name").value("Gloria"))
                 .andExpect(jsonPath("$[1].age").value("22"))
                 .andExpect(jsonPath("$[1].gender").value("Female"));
@@ -140,9 +140,9 @@ public class EmployeeControllerTest {
     @Test
     void should_return_changed_employee_when_perform_put_given_employee_id() throws Exception {
         //given
-        Employee employee1 = new Employee("1", "Marcus", 19, "Male", 1920213,"1");
-        Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000, "1");
-        Employee employee3 = new Employee("3", "Linne", 22, "Female", 1000000,"1");
+        Employee employee1 = new Employee( "Marcus", 19, "Male", 1920213,"1");
+        Employee employee2 = new Employee( "Gloria", 22, "Female", 1000000, "1");
+        Employee employee3 = new Employee( "Linne", 22, "Female", 1000000,"1");
 
         employeeRepository.insert(employee1);
         employeeRepository.insert(employee2);
@@ -167,8 +167,8 @@ public class EmployeeControllerTest {
     @Test
     void should_delete_employee_when_perform_delete_given_employee_and_id() throws Exception {
         //given
-        Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1" );
-        Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
+        Employee employee = new Employee( "Marcus", 19, "Male", 1920213,"1" );
+        Employee employee2 = new Employee( "Gloria", 22, "Female", 1000000,"1");
 
         employeeRepository.insert(employee);
         employeeRepository.insert(employee2);

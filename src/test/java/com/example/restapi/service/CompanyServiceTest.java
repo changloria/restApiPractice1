@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
@@ -33,13 +34,13 @@ public class CompanyServiceTest {
 
     private List<Employee> getEmployees() {
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("1", "Gloria1", 22, "Female", 100000, "1"));
-        employees.add(new Employee("2", "Gloria2", 22, "Female", 100000, "1"));
-        employees.add(new Employee("3", "Gloria3", 22, "Female", 100000, "1"));
-        employees.add(new Employee("4", "Gloria4", 22, "Female", 100000, "1"));
-        employees.add(new Employee("5", "Gloria5", 22, "Female", 100000, "1"));
-        employees.add(new Employee("6", "Gloria6", 22, "Female", 100000, "1"));
-        employees.add(new Employee("7", "Gloria7", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria1", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria2", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria3", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria4", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria5", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria6", 22, "Female", 100000, "1"));
+        employees.add(new Employee( "Gloria7", 22, "Female", 100000, "1"));
         return employees;
     }
 
@@ -56,15 +57,15 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_get_company_when_perform_getById_given_company_and_id() throws Exception {
+    void should_get_company_when_perform_getById_given_company_and_id(){
         //given
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company("1", "OOCL"));
-        companies.add(new Company("2", "OOCL2"));
+        companies.add(new Company("OOCL"));
+        companies.add(new Company("OOCL2"));
 
-        given(companyRepository.findById("1"))
+        given(companyRepository.findById(any()))
                 .willReturn(java.util.Optional.ofNullable(companies.get(0)));
-        given(mockEmployeeService.findEmployeesByCompanyId("1"))
+        given(mockEmployeeService.findEmployeesByCompanyId(companies.get(0).getId()))
                 .willReturn(getEmployees());
 
         //when
@@ -75,12 +76,12 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_get_all_employee_under_company_when_obtain_employee_list_given_employees_and_company() throws Exception {
+    void should_get_all_employee_under_company_when_obtain_employee_list_given_employees_and_company(){
         //given
         List<Employee> employees = getEmployees();
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company("1", "OOCL"));
-        companies.add(new Company("2", "OOCL2"));
+        companies.add(new Company("OOCL"));
+        companies.add(new Company("OOCL2"));
 
         given(mockEmployeeService.findEmployeesByCompanyId("1"))
                 .willReturn(employees);
@@ -91,11 +92,11 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company() throws Exception {
+    void should_get_all_companies_when_getByPaging_given_page_and_pageSize_and_company(){
         //given
         List<Company> companies = new ArrayList<>();
-        companies.add(new Company("1", "OOCL"));
-        companies.add(new Company("2", "OOCL2"));
+        companies.add(new Company( "OOCL"));
+        companies.add(new Company("OOCL2"));
 
         Integer page = 1;
         Integer pageSize = 2;
@@ -110,9 +111,9 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_company_when_perform_post_given_company() throws Exception {
+    void should_return_company_when_perform_post_given_company(){
         //given
-        Company newCompany = new Company("3", "OOCL3");
+        Company newCompany = new Company("OOCL3");
         given(companyRepository.save(newCompany))
                 .willReturn(newCompany);
         //when
@@ -122,9 +123,9 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_update_company_when_perform_put_given_company_id() throws Exception {
+    void should_return_update_company_when_perform_put_given_company_id(){
         //given
-        Company updatedCompany = new Company("1", "OOCLL");
+        Company updatedCompany = new Company("OOCLL");
         given(companyRepository.save(updatedCompany))
                 .willReturn(updatedCompany);
         given(companyRepository.findById("1"))
@@ -138,9 +139,9 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
+    void should_delete_company_when_perform_delete_given_company_and_id(){
         //given
-        Company company = new Company("1", "OOCL");
+        Company company = new Company("OOCL");
         willDoNothing().given(companyRepository).deleteById(company.getId());
         //when
         companyService.delete(company.getId());
