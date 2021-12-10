@@ -2,7 +2,6 @@ package com.example.restapi.controller;
 
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.EmployeeRepository;
-import com.example.restapi.repository.EmployeeRepositoryNew;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest {
     @Autowired
     EmployeeRepository employeeRepository;
-
-    @Autowired
-    EmployeeRepositoryNew employeeRepositoryNew;
     @Autowired
     MockMvc mockMvc;
 
     @AfterEach
     void cleanRepository() {
-        employeeRepositoryNew.deleteAll();
+        employeeRepository.deleteAll();
     }
 
 
@@ -41,8 +37,8 @@ public class EmployeeControllerTest {
         //given
         Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1");
         Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000, "1");
-        employeeRepositoryNew.insert(employee);
-        employeeRepositoryNew.insert(employee2);
+        employeeRepository.insert(employee);
+        employeeRepository.insert(employee2);
 
         //when
         //then
@@ -59,7 +55,7 @@ public class EmployeeControllerTest {
     void should_get_employee_when_perform_getID_given_employee_and_id() throws Exception {
         //given
         Employee employee = new Employee("1", "Gloria", 22, "female", 1000000, "1");
-        employeeRepositoryNew.insert(employee);
+        employeeRepository.insert(employee);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", employee.getId())
@@ -78,8 +74,8 @@ public class EmployeeControllerTest {
         Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1");
         Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
 
-        employeeRepositoryNew.insert(employee);
-        employeeRepositoryNew.insert(employee2);
+        employeeRepository.insert(employee);
+        employeeRepository.insert(employee2);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", employee.getGender()))
@@ -97,9 +93,9 @@ public class EmployeeControllerTest {
         Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
         Employee employee3 = new Employee("3", "Linne", 22, "Female", 1000000,"1");
 
-        employeeRepositoryNew.insert(employee1);
-        employeeRepositoryNew.insert(employee2);
-        employeeRepositoryNew.insert(employee3);
+        employeeRepository.insert(employee1);
+        employeeRepository.insert(employee2);
+        employeeRepository.insert(employee3);
         //when
 
         //then
@@ -148,9 +144,9 @@ public class EmployeeControllerTest {
         Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000, "1");
         Employee employee3 = new Employee("3", "Linne", 22, "Female", 1000000,"1");
 
-        employeeRepositoryNew.insert(employee1);
-        employeeRepositoryNew.insert(employee2);
-        employeeRepositoryNew.insert(employee3);
+        employeeRepository.insert(employee1);
+        employeeRepository.insert(employee2);
+        employeeRepository.insert(employee3);
 
         String employee = "{\n" +
                 "        \"age\": 25,\n" +
@@ -174,8 +170,8 @@ public class EmployeeControllerTest {
         Employee employee = new Employee("1", "Marcus", 19, "Male", 1920213,"1" );
         Employee employee2 = new Employee("2", "Gloria", 22, "Female", 1000000,"1");
 
-        employeeRepositoryNew.insert(employee);
-        employeeRepositoryNew.insert(employee2);
+        employeeRepository.insert(employee);
+        employeeRepository.insert(employee2);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employee.getId()))

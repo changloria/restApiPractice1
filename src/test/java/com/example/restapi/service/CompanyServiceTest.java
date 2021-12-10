@@ -3,7 +3,6 @@ package com.example.restapi.service;
 import com.example.restapi.entity.Company;
 import com.example.restapi.entity.Employee;
 import com.example.restapi.repository.CompanyRepository;
-import com.example.restapi.repository.CompanyRepositoryNew;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,11 +21,9 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
-    @Mock
-    CompanyRepository mockCompanyRepository;
 
     @Mock
-    CompanyRepositoryNew companyRepositoryNew;
+    CompanyRepository companyRepository;
 
     @Mock
     EmployeeService mockEmployeeService;
@@ -50,7 +47,7 @@ public class CompanyServiceTest {
     void should_return_all_employees_when_find_all_given_employees() {
         //given
         List<Company> companies = new ArrayList<>();
-        given(companyRepositoryNew.findAll())
+        given(companyRepository.findAll())
                 .willReturn(companies);
         //when
         List<Company> actual = companyService.findAll();
@@ -65,7 +62,7 @@ public class CompanyServiceTest {
         companies.add(new Company("1", "OOCL"));
         companies.add(new Company("2", "OOCL2"));
 
-        given(companyRepositoryNew.findById("1"))
+        given(companyRepository.findById("1"))
                 .willReturn(java.util.Optional.ofNullable(companies.get(0)));
         given(mockEmployeeService.findEmployeesByCompanyId("1"))
                 .willReturn(getEmployees());
@@ -103,7 +100,7 @@ public class CompanyServiceTest {
         Integer page = 1;
         Integer pageSize = 2;
 
-        given(companyRepositoryNew.findAll(PageRequest.of(page, pageSize)))
+        given(companyRepository.findAll(PageRequest.of(page, pageSize)))
                 .willReturn(new PageImpl<>(companies, PageRequest.of(page,pageSize),pageSize));
 
         //when`
@@ -116,7 +113,7 @@ public class CompanyServiceTest {
     void should_return_company_when_perform_post_given_company() throws Exception {
         //given
         Company newCompany = new Company("3", "OOCL3");
-        given(companyRepositoryNew.save(newCompany))
+        given(companyRepository.save(newCompany))
                 .willReturn(newCompany);
         //when
         Company actual = companyService.create(newCompany);
@@ -128,9 +125,9 @@ public class CompanyServiceTest {
     void should_return_update_company_when_perform_put_given_company_id() throws Exception {
         //given
         Company updatedCompany = new Company("1", "OOCLL");
-        given(companyRepositoryNew.save(updatedCompany))
+        given(companyRepository.save(updatedCompany))
                 .willReturn(updatedCompany);
-        given(companyRepositoryNew.findById("1"))
+        given(companyRepository.findById("1"))
                 .willReturn(java.util.Optional.of(updatedCompany));
         //when
         Company actual = companyService.save("1", updatedCompany);
@@ -144,11 +141,11 @@ public class CompanyServiceTest {
     void should_delete_company_when_perform_delete_given_company_and_id() throws Exception {
         //given
         Company company = new Company("1", "OOCL");
-        willDoNothing().given(companyRepositoryNew).deleteById(company.getId());
+        willDoNothing().given(companyRepository).deleteById(company.getId());
         //when
         companyService.delete(company.getId());
         //then
-        verify(companyRepositoryNew).deleteById(company.getId());
+        verify(companyRepository).deleteById(company.getId());
     }
 
 }

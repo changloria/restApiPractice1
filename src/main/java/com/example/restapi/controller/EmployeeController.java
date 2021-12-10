@@ -2,7 +2,6 @@ package com.example.restapi.controller;
 
 import com.example.restapi.dto.EmployeeRequest;
 import com.example.restapi.dto.EmployeeResponse;
-import com.example.restapi.entity.Employee;
 import com.example.restapi.mapper.EmployeeMapper;
 import com.example.restapi.service.EmployeeService;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,12 @@
 package com.example.restapi.entity;
 
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
 import java.util.List;
 
 public class Company {
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String name;
     private List<Employee> employees;
