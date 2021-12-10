@@ -19,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
@@ -39,6 +40,7 @@ public class EmployeeServiceTest {
         List<Employee> actual = employeeService.findAll();
         //then
         assertEquals(employees, actual);
+        assertEquals(employees.get(0).getName(), actual.get(0).getName());
     }
 
     @Test
@@ -125,6 +127,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("Marcus", 25, "Male", 9999999, "1");
 
+        willDoNothing().given(employeeRepository).deleteById(employee.getId());
         //when
         employeeService.delete(employee.getId());
         //then
